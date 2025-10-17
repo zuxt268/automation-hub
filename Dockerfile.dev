@@ -1,0 +1,17 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install dependencies
+COPY package.json package-lock.json* ./
+RUN npm ci
+
+# Copy source code (will be overridden by volume mount for hot reload)
+COPY . .
+
+EXPOSE 3000
+
+ENV PORT=3000
+
+# Run development server with turbopack for hot reload
+CMD ["npm", "run", "dev"]

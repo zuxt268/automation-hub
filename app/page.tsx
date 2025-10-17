@@ -23,8 +23,6 @@ export default async function Dashboard() {
         <div className="bg-white rounded-lg shadow p-6">
           <p className="text-gray-600">ようこそ！ダッシュボードです。</p>
           <p className="text-gray-600">追加</p>
-            <p className="text-gray-600">あ</p>
-            <p className="text-gray-600">あ</p>
         </div>
       </main>
     </div>
