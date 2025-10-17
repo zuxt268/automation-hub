@@ -1,8 +1,8 @@
-.PHONY: run
+.PHONY: rebuild
 
 
-run:
+rebuild:
 	docker compose down
-	docker compose build automation-lab --no-cache
-	docker compose up --build -d
+	docker compose build --no-cache
+	docker compose up -d
 	docker compose ps
