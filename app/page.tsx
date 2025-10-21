@@ -16,7 +16,19 @@ export default async function Dashboard() {
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">{data.status}</h1>
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl font-bold text-gray-900">{data.status}</h1>
+            <div className="flex items-center gap-3">
+              {session.user?.image && (
+                <img
+                  src={session.user.image}
+                  alt="User avatar"
+                  className="w-10 h-10 rounded-full"
+                />
+              )}
+              <span className="text-gray-700">{session.user?.email}</span>
+            </div>
+          </div>
         </div>
       </header>
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
