@@ -1,4 +1,4 @@
-import {HealthCheckResponse} from "@/app/types/api";
+import {HealthCheckResponse, Target, CreateTargetRequest, Domain, FetchDomainsRequest} from "@/app/types/api";
 import {cookies} from 'next/headers';
 
 const API_BASE_URL = process.env.API_BASE_URL;
@@ -25,10 +25,75 @@ async function apiFetch<T>(endpoint: string, options?: RequestInit): Promise<T> 
         },
         ...options,
     });
+
+    if (response.status === 204 || response.headers.get('content-length') === '0') {
+        return undefined as T;
+    }
+
     return response.json();
 }
 
 export async function getHealthCheck(): Promise<HealthCheckResponse> {
     return apiFetch<HealthCheckResponse>('/healthcheck');
+}
+
+export async function getTargets(params?: {
+    limit?: number;
+    offset?: number;
+}): Promise<Target[]> {
+    const queryParams = new URLSearchParams();
+    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    if (params?.offset) queryParams.append('offset', params.offset.toString());
+
+    const query = queryParams.toString();
+    return apiFetch<Target[]>(`/targets${query ? `?${query}` : ''}`);
+}
+
+export async function createTarget(data: CreateTargetRequest): Promise<Target> {
+    return apiFetch<Target>('/targets', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    });
+}
+
+export async function deleteTarget(id: number): Promise<void> {
+    await apiFetch<void>(`/targets/${id}`, {
+        method: 'DELETE',
+    });
+}
+
+export async function getDomains(params?: {
+    limit?: number;
+    offset?: number;
+    name?: string;
+    can_view?: boolean;
+    is_japan?: boolean;
+    is_send?: boolean;
+    owner_id?: string;
+    status?: string;
+    industry?: string;
+    is_ssl?: boolean;
+}): Promise<Domain[]> {
+    const queryParams = new URLSearchParams();
+    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    if (params?.offset) queryParams.append('offset', params.offset.toString());
+    if (params?.name) queryParams.append('name', params.name);
+    if (params?.can_view !== undefined) queryParams.append('can_view', params.can_view.toString());
+    if (params?.is_japan !== undefined) queryParams.append('is_japan', params.is_japan.toString());
+    if (params?.is_send !== undefined) queryParams.append('is_send', params.is_send.toString());
+    if (params?.owner_id) queryParams.append('owner_id', params.owner_id);
+    if (params?.status) queryParams.append('status', params.status);
+    if (params?.industry) queryParams.append('industry', params.industry);
+    if (params?.is_ssl !== undefined) queryParams.append('is_ssl', params.is_ssl.toString());
+
+    const query = queryParams.toString();
+    return apiFetch<Domain[]>(`/domains${query ? `?${query}` : ''}`);
+}
+
+export async function fetchDomains(data: FetchDomainsRequest): Promise<void> {
+    await apiFetch<void>('/fetch', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    });
 }
 
