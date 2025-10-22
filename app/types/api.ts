@@ -45,3 +45,11 @@ export interface Domain {
 export interface FetchDomainsRequest {
   target: string;
 }
+
+export interface Log {
+  id: number;
+  name: string;
+  category: string;
+  message: string;
+  created_at: string;
+}

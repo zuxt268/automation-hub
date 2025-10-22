@@ -48,6 +48,20 @@ export default async function Dashboard() {
             </div>
             <p className="text-gray-600">ドメインの一覧、企業情報を確認します</p>
           </Link>
+          <Link
+            href="/logs"
+            className="group block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-purple-300 transition-all"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors">
+                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">実行ログ</h2>
+            </div>
+            <p className="text-gray-600">システムの実行ログを確認します</p>
+          </Link>
         </div>
       </main>
     </div>

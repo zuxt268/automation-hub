@@ -14,11 +14,13 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit') ? Number(searchParams.get('limit')) : undefined;
     const offset = searchParams.get('offset') ? Number(searchParams.get('offset')) : undefined;
+    const status = searchParams.get('status') || undefined;
+    const isJapan = searchParams.get('is_japan') ? searchParams.get('is_japan') === 'true' : undefined;
 
-    const domains = await getDomains({ limit, offset });
+    const domains = await getDomains({ limit, offset, status, is_japan: isJapan });
 
-    // 総数を取得するために全件取得（本来はバックエンドからtotalを返すべき）
-    const allDomains = await getDomains();
+    // 総数を取得（フィルター適用済み）
+    const allDomains = await getDomains({ status, is_japan: isJapan });
 
     return NextResponse.json({
       domains,

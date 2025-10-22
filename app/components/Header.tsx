@@ -17,6 +17,7 @@ export default function Header({ userEmail, userImage }: HeaderProps) {
     if (pathname === '/targets') return 'ターゲット管理';
     if (pathname === '/targets/new') return 'ターゲット新規登録';
     if (pathname === '/domains') return 'ドメイン管理';
+    if (pathname === '/logs') return '実行ログ';
     return 'Sales Automation';
   };
 
@@ -68,6 +69,16 @@ export default function Header({ userEmail, userImage }: HeaderProps) {
                 }`}
               >
                 ドメイン
+              </Link>
+              <Link
+                href="/logs"
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  pathname === '/logs'
+                    ? 'bg-blue-50 text-blue-700'
+                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                }`}
+              >
+                ログ
               </Link>
             </nav>
           </div>

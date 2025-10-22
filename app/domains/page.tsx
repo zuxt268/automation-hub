@@ -5,7 +5,7 @@ import { getDomains } from '../lib/api';
 import Header from '../components/Header';
 import DomainListWrapper from './DomainListWrapper';
 
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 100;
 
 export default async function DomainsPage() {
   const session = await getServerSession(authOptions);

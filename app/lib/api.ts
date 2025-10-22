@@ -1,4 +1,4 @@
-import {HealthCheckResponse, Target, CreateTargetRequest, Domain, FetchDomainsRequest} from "@/app/types/api";
+import {HealthCheckResponse, Target, CreateTargetRequest, Domain, FetchDomainsRequest, Log} from "@/app/types/api";
 import {cookies} from 'next/headers';
 
 const API_BASE_URL = process.env.API_BASE_URL;
@@ -95,5 +95,17 @@ export async function fetchDomains(data: FetchDomainsRequest): Promise<void> {
         method: 'POST',
         body: JSON.stringify(data),
     });
+}
+
+export async function getLogs(params?: {
+    limit?: number;
+    offset?: number;
+}): Promise<Log[]> {
+    const queryParams = new URLSearchParams();
+    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    if (params?.offset) queryParams.append('offset', params.offset.toString());
+
+    const query = queryParams.toString();
+    return apiFetch<Log[]>(`/logs${query ? `?${query}` : ''}`);
 }
 

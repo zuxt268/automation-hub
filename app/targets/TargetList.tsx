@@ -98,27 +98,27 @@ export default function TargetList({ targets }: TargetListProps) {
           ) : (
             targets.map((target) => (
               <tr key={target.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
                   {target.id}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
                   {target.name}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
                   {target.ip}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-4 py-2 whitespace-nowrap">
                   <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                     {target.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
                   {new Date(target.create_at).toLocaleString('ja-JP')}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
                   {new Date(target.update_at).toLocaleString('ja-JP')}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleFetch(target.name)}
