@@ -45,6 +45,9 @@ export default function DomainList({ domains }: DomainListProps) {
                 ID
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ターゲット
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 ドメイン名
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -73,7 +76,7 @@ export default function DomainList({ domains }: DomainListProps) {
           <tbody className="bg-white divide-y divide-gray-200">
             {domains.length === 0 ? (
               <tr>
-                <td colSpan={9} className="px-6 py-4 text-center text-gray-500">
+                <td colSpan={10} className="px-6 py-4 text-center text-gray-500">
                   ドメインが見つかりませんでした
                 </td>
               </tr>
@@ -82,6 +85,9 @@ export default function DomainList({ domains }: DomainListProps) {
                 <tr key={domain.id} className="hover:bg-gray-50">
                   <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
                     {domain.id}
+                  </td>
+                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
+                    {domain.target || '-'}
                   </td>
                   <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
                     <a
@@ -118,7 +124,7 @@ export default function DomainList({ domains }: DomainListProps) {
                     </span>
                   </td>
                   <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
-                    {formatDate(domain.create_at)}
+                    {formatDate(domain.created_at)}
                   </td>
                 </tr>
               ))

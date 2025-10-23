@@ -11,7 +11,7 @@ interface TargetListProps {
 export default function TargetList({ targets }: TargetListProps) {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<number | null>(null);
-  const [fetchingName, setFetchingName] = useState<string | null>(null);
+  const [fetchingIp, setFetchingIp] = useState<string | null>(null);
 
   const handleDelete = async (id: number) => {
     if (!confirm('本当に削除しますか？')) {
@@ -37,7 +37,7 @@ export default function TargetList({ targets }: TargetListProps) {
   };
 
   const handleFetch = async (targetName: string) => {
-    setFetchingName(targetName);
+    setFetchingIp(targetName);
 
     try {
       const response = await fetch('/api/fetch', {
@@ -56,7 +56,7 @@ export default function TargetList({ targets }: TargetListProps) {
     } catch (error) {
       alert(error instanceof Error ? error.message : 'Fetch処理の開始に失敗しました');
     } finally {
-      setFetchingName(null);
+      setFetchingIp(null);
     }
   };
 
@@ -113,19 +113,19 @@ export default function TargetList({ targets }: TargetListProps) {
                   </span>
                 </td>
                 <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
-                  {new Date(target.create_at).toLocaleString('ja-JP')}
+                  {new Date(target.created_at).toLocaleString('ja-JP')}
                 </td>
                 <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
-                  {new Date(target.update_at).toLocaleString('ja-JP')}
+                  {new Date(target.updated_at).toLocaleString('ja-JP')}
                 </td>
                 <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
                   <div className="flex gap-2">
                     <button
-                      onClick={() => handleFetch(target.name)}
-                      disabled={fetchingName === target.name}
+                      onClick={() => handleFetch(target.ip)}
+                      disabled={fetchingIp === target.ip}
                       className="text-blue-600 hover:text-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {fetchingName === target.name ? 'Fetch中...' : 'Fetch'}
+                      {fetchingIp === target.ip ? 'Fetch中...' : 'Fetch'}
                     </button>
                     <button
                       onClick={() => handleDelete(target.id)}

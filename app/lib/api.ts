@@ -73,6 +73,7 @@ export async function getDomains(params?: {
     status?: string;
     industry?: string;
     is_ssl?: boolean;
+    target?: string;
 }): Promise<Domain[]> {
     const queryParams = new URLSearchParams();
     if (params?.limit) queryParams.append('limit', params.limit.toString());
@@ -85,6 +86,7 @@ export async function getDomains(params?: {
     if (params?.status) queryParams.append('status', params.status);
     if (params?.industry) queryParams.append('industry', params.industry);
     if (params?.is_ssl !== undefined) queryParams.append('is_ssl', params.is_ssl.toString());
+    if (params?.target) queryParams.append('target', params.target);
 
     const query = queryParams.toString();
     return apiFetch<Domain[]>(`/domains${query ? `?${query}` : ''}`);

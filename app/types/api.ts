@@ -7,8 +7,8 @@ export interface Target {
   name: string;
   ip: string;
   status: 'init';
-  create_at: string;
-  update_at: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface CreateTargetRequest {
@@ -38,8 +38,9 @@ export interface Domain {
   is_ssl: boolean;
   is_send: boolean;
   status: DomainStatus;
-  create_at: string;
-  update_at: string;
+  target: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface FetchDomainsRequest {
