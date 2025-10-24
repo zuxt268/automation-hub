@@ -1,4 +1,4 @@
-import {HealthCheckResponse, Target, CreateTargetRequest, Domain, FetchDomainsRequest, Log} from "@/app/types/api";
+import {HealthCheckResponse, Target, CreateTargetRequest, Domain, FetchDomainsRequest, Log, Task, CreateTaskRequest, UpdateTaskRequest} from "@/app/types/api";
 import {cookies} from 'next/headers';
 
 const API_BASE_URL = process.env.API_BASE_URL;
@@ -92,6 +92,10 @@ export async function getDomains(params?: {
     return apiFetch<Domain[]>(`/domains${query ? `?${query}` : ''}`);
 }
 
+export async function getDomainById(id: number): Promise<Domain> {
+    return apiFetch<Domain>(`/domains/${id}`);
+}
+
 export async function fetchDomains(data: FetchDomainsRequest): Promise<void> {
     await apiFetch<void>('/fetch', {
         method: 'POST',
@@ -111,3 +115,26 @@ export async function getLogs(params?: {
     return apiFetch<Log[]>(`/logs${query ? `?${query}` : ''}`);
 }
 
+export async function getTasks(): Promise<Task[]> {
+    return apiFetch<Task[]>('/tasks');
+}
+
+export async function createTask(data: CreateTaskRequest): Promise<Task> {
+    return apiFetch<Task>('/tasks', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    });
+}
+
+export async function updateTask(id: number, data: UpdateTaskRequest): Promise<Task> {
+    return apiFetch<Task>(`/tasks/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+    });
+}
+
+export async function deleteTask(id: number): Promise<void> {
+    await apiFetch<void>(`/tasks/${id}`, {
+        method: 'DELETE',
+    });
+}

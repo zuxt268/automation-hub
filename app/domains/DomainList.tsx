@@ -1,12 +1,21 @@
 'use client';
 
 import { Domain } from '../types/api';
+import { useRouter } from 'next/navigation';
 
 interface DomainListProps {
   domains: Domain[];
 }
 
 export default function DomainList({ domains }: DomainListProps) {
+  const router = useRouter();
+
+  const handleRowClick = (domainId: number, e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).tagName !== 'A') {
+      router.push(`/domains/${domainId}`);
+    }
+  };
+
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
       case 'done':
@@ -26,12 +35,12 @@ export default function DomainList({ domains }: DomainListProps) {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    const year = date.getUTCFullYear();
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const hours = String(date.getUTCHours()).padStart(2, '0');
-    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
     return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
   };
 
@@ -51,21 +60,6 @@ export default function DomainList({ domains }: DomainListProps) {
                 ドメイン名
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                会社名
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                業種
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                都道府県
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                電話番号
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                SSL
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 ステータス
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -76,13 +70,17 @@ export default function DomainList({ domains }: DomainListProps) {
           <tbody className="bg-white divide-y divide-gray-200">
             {domains.length === 0 ? (
               <tr>
-                <td colSpan={10} className="px-6 py-4 text-center text-gray-500">
+                <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
                   ドメインが見つかりませんでした
                 </td>
               </tr>
             ) : (
               domains.map((domain) => (
-                <tr key={domain.id} className="hover:bg-gray-50">
+                <tr
+                  key={domain.id}
+                  onClick={(e) => handleRowClick(domain.id, e)}
+                  className="hover:bg-gray-50 cursor-pointer"
+                >
                   <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
                     {domain.id}
                   </td>
@@ -98,25 +96,6 @@ export default function DomainList({ domains }: DomainListProps) {
                     >
                       {domain.name}
                     </a>
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
-                    {domain.company || '-'}
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
-                    {domain.industry || '-'}
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
-                    {domain.prefecture || '-'}
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
-                    {domain.phone || domain.landline_phone || domain.mobile_phone || '-'}
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
-                    {domain.is_ssl ? (
-                      <span className="text-green-600">✓</span>
-                    ) : (
-                      <span className="text-red-600">✗</span>
-                    )}
                   </td>
                   <td className="px-4 py-2 whitespace-nowrap">
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeColor(domain.status)}`}>

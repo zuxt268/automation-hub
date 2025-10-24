@@ -54,3 +54,24 @@ export interface Log {
   message: string;
   created_at: string;
 }
+
+export interface Task {
+  id: number;
+  name: string;
+  description: string;
+  status: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CreateTaskRequest {
+  name: string;
+  description: string;
+  status: number;
+}
+
+export interface UpdateTaskRequest {
+  name?: string;
+  description?: string;
+  status?: number;
+}

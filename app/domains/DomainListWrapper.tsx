@@ -20,6 +20,7 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
   const [statusFilter, setStatusFilter] = useState<string>('');
   const [isJapanFilter, setIsJapanFilter] = useState<string>('');
   const [targetFilter, setTargetFilter] = useState<string>('');
+  const [nameFilter, setNameFilter] = useState<string>('');
 
   useEffect(() => {
     const fetchDomains = async () => {
@@ -31,6 +32,7 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
         if (statusFilter) params.append('status', statusFilter);
         if (isJapanFilter) params.append('is_japan', isJapanFilter);
         if (targetFilter) params.append('target', targetFilter);
+        if (nameFilter) params.append('name', nameFilter);
 
         const response = await fetch(`/api/domains?${params.toString()}`);
         if (!response.ok) {
@@ -48,7 +50,7 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
     };
 
     fetchDomains();
-  }, [currentPage, statusFilter, isJapanFilter, targetFilter]);
+  }, [currentPage, statusFilter, isJapanFilter, targetFilter, nameFilter]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -70,8 +72,24 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
   return (
     <div>
       <div className="bg-white rounded-lg shadow p-4 mb-4">
-        <div className="flex gap-4 items-end">
-          <div className="flex-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              ドメイン名
+            </label>
+            <input
+              id="name"
+              type="text"
+              value={nameFilter}
+              onChange={(e) => {
+                setNameFilter(e.target.value);
+                handleFilterChange();
+              }}
+              placeholder="ドメイン名で検索"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
             <label htmlFor="target" className="block text-sm font-medium text-gray-700 mb-1">
               ターゲット
             </label>
@@ -87,7 +105,7 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-          <div className="flex-1">
+          <div>
             <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
               ステータス
             </label>
@@ -109,7 +127,7 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
               <option value="done">done</option>
             </select>
           </div>
-          <div className="flex-1">
+          <div>
             <label htmlFor="is_japan" className="block text-sm font-medium text-gray-700 mb-1">
               日本のサイトか
             </label>
@@ -127,8 +145,11 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
               <option value="false">日本以外</option>
             </select>
           </div>
+        </div>
+        <div className="flex justify-end">
           <button
             onClick={() => {
+              setNameFilter('');
               setTargetFilter('');
               setStatusFilter('');
               setIsJapanFilter('');
