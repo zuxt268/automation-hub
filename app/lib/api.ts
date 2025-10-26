@@ -62,6 +62,12 @@ export async function deleteTarget(id: number): Promise<void> {
     });
 }
 
+export async function executeTask(id: number): Promise<void> {
+    await apiFetch<void>(`/tasks/${id}/execute`, {
+        method: 'POST',
+    })
+}
+
 export async function getDomains(params?: {
     limit?: number;
     offset?: number;

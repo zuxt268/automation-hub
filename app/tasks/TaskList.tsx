@@ -48,6 +48,7 @@ const formatDate = (dateString: string) => {
 export default function TaskList({ tasks }: TaskListProps) {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [executingId, setExecutingId] = useState<number | null>(null);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [editForm, setEditForm] = useState({ name: '', description: '', status: 0 });
   const [isCreating, setIsCreating] = useState(false);
@@ -137,6 +138,25 @@ export default function TaskList({ tasks }: TaskListProps) {
       router.refresh();
     } catch (error) {
       alert(error instanceof Error ? error.message : '作成に失敗しました');
+    }
+  };
+
+  const handleExecute = async (id: number) => {
+    setExecutingId(id);
+
+    try {
+      const response = await fetch(`/api/tasks/${id}/execute`, {
+        method: 'POST',
+      });
+
+      if (!response.ok) {
+        throw new Error('実行に失敗しました');
+      }
+
+      router.refresh();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : '実行に失敗しました');
+      setExecutingId(null);
     }
   };
 
@@ -277,6 +297,15 @@ export default function TaskList({ tasks }: TaskListProps) {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div className="flex gap-2">
+                      {task.status === 1 && (
+                        <button
+                          onClick={() => handleExecute(task.id)}
+                          disabled={executingId === task.id}
+                          className="text-green-600 hover:text-green-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {executingId === task.id ? '実行中...' : '実行'}
+                        </button>
+                      )}
                       <button
                         onClick={() => handleEdit(task)}
                         className="text-blue-600 hover:text-blue-900"
@@ -330,9 +359,15 @@ export default function TaskList({ tasks }: TaskListProps) {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   ステータス
                 </label>
-                <div className="w-full px-3 py-2 border border-gray-200 rounded-md bg-gray-50 text-gray-500">
-                  {getStatusLabel(editForm.status)}
-                </div>
+                <select
+                  value={editForm.status}
+                  onChange={(e) => setEditForm({ ...editForm, status: parseInt(e.target.value) })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value={0}>無効</option>
+                  <option value={1}>待機</option>
+                  <option value={2}>実行中</option>
+                </select>
               </div>
               <div className="flex gap-2">
                 <button
