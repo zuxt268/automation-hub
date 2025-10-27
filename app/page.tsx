@@ -49,20 +49,6 @@ export default async function Dashboard() {
             <p className="text-gray-600">ドメインの一覧、企業情報を確認します</p>
           </Link>
           <Link
-            href="/logs"
-            className="group block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-purple-300 transition-all"
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors">
-                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <h2 className="text-xl font-bold text-gray-900">実行ログ</h2>
-            </div>
-            <p className="text-gray-600">システムの実行ログを確認します</p>
-          </Link>
-          <Link
             href="/tasks"
             className="group block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-orange-300 transition-all"
           >
@@ -76,6 +62,36 @@ export default async function Dashboard() {
             </div>
             <p className="text-gray-600">タスクの一覧、登録、管理を行います</p>
           </Link>
+          <a
+            href="https://docs.google.com/spreadsheets/d/1raFhmdhZi6PIU3QzRRTwi57d-IUSMx4X5qIFa7Ii6MA/edit?gid=0#gid=0"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-yellow-300 transition-all"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2 bg-yellow-100 rounded-lg group-hover:bg-yellow-200 transition-colors">
+                <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">スプレッドシート</h2>
+            </div>
+            <p className="text-gray-600">競合他社サイトの管理シートを開きます</p>
+          </a>
+            <Link
+                href="/logs"
+                className="group block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-purple-300 transition-all"
+            >
+                <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors">
+                        <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h2 className="text-xl font-bold text-gray-900">実行ログ</h2>
+                </div>
+                <p className="text-gray-600">システムの実行ログを確認します</p>
+            </Link>
         </div>
       </main>
     </div>
