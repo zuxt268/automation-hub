@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sales Automation",
-  description: "Domain Management System",
+  title: "Sales Orchestrio",
+  description: "Business Automation Platform",
   icons: {
     icon: '/sd.ico',
   },

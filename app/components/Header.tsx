@@ -22,8 +22,8 @@ export default function Header({ userEmail, userImage }: HeaderProps) {
               className="rounded-lg"
             />
             <div className="flex flex-col">
-              <span className="text-gray-900 font-bold text-lg tracking-tight">Sales Automation</span>
-              <span className="text-gray-500 text-xs">Domain Management System</span>
+              <span className="text-gray-900 font-bold text-lg tracking-tight">Sales Orchestrio</span>
+              <span className="text-gray-500 text-xs">Business Automation Platform</span>
             </div>
           </Link>
           <div className="flex items-center gap-4">
