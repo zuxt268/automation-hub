@@ -1,12 +1,31 @@
 'use client';
 
 import { Log } from '../types/api';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Pagination from '../domains/Pagination';
 
 interface LogListProps {
-  logs: Log[];
+  initialLogs: Log[];
+  totalCount: number;
 }
 
-export default function LogList({ logs }: LogListProps) {
+export default function LogList({ initialLogs, totalCount }: LogListProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [logs, setLogs] = useState<Log[]>(initialLogs);
+  const [isLoading, setIsLoading] = useState(false);
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil(totalCount / itemsPerPage);
+  const currentPage = Number(searchParams.get('page')) || 1;
+
+  useEffect(() => {
+    setLogs(initialLogs);
+  }, [initialLogs]);
+
+  const handlePageChange = (page: number) => {
+    router.push(`/logs?page=${page}`);
+  };
   const getCategoryColor = (category: string) => {
     switch (category.toLowerCase()) {
       case 'error':
@@ -34,55 +53,70 @@ export default function LogList({ logs }: LogListProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-48">
-                日時
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
-                処理名
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
-                カテゴリー
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                メッセージ
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {logs.length === 0 ? (
+    <>
+      <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
               <tr>
-                <td colSpan={4} className="px-6 py-4 text-center text-gray-500">
-                  ログが見つかりませんでした
-                </td>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-48">
+                  日時
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
+                  処理名
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
+                  カテゴリー
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  メッセージ
+                </th>
               </tr>
-            ) : (
-              logs.map((log) => (
-                <tr key={log.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
-                    {formatDate(log.created_at)}
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
-                    {log.name}
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getCategoryColor(log.category)}`}>
-                      {log.category}
-                    </span>
-                  </td>
-                  <td className="px-4 py-2 text-sm text-gray-900">
-                    {log.message}
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {isLoading ? (
+                <tr>
+                  <td colSpan={4} className="px-6 py-4 text-center text-gray-500">
+                    読み込み中...
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : !logs || logs.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="px-6 py-4 text-center text-gray-500">
+                    ログが見つかりませんでした
+                  </td>
+                </tr>
+              ) : (
+                logs.map((log) => (
+                  <tr key={log.id} className="hover:bg-gray-50">
+                    <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
+                      {formatDate(log.created_at)}
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
+                      {log.name}
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap">
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getCategoryColor(log.category)}`}>
+                        {log.category}
+                      </span>
+                    </td>
+                    <td className="px-4 py-2 text-sm text-gray-900">
+                      {log.message}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
+    </>
   );
 }

@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from './api/auth/[...nextauth]/route';
 import Header from './components/Header';
+import Sidebar from './components/Sidebar';
 import Link from 'next/link';
 
 export default async function Dashboard() {
@@ -14,7 +15,8 @@ export default async function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header userEmail={session.user?.email} userImage={session.user?.image} />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Sidebar />
+      <main className="ml-64 pt-24 px-4 sm:px-6 lg:px-8 pb-8">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900">ダッシュボード</h1>
           <p className="text-gray-600 mt-1">各機能にアクセスできます</p>

@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import Header from '@/app/components/Header';
+import Sidebar from '@/app/components/Sidebar';
 import Link from 'next/link';
 import DomainDetail from './DomainDetail';
 
@@ -36,7 +37,8 @@ export default async function DomainDetailPage({ params }: { params: Promise<{ i
   return (
     <div className="min-h-screen bg-gray-50">
       <Header userEmail={session.user?.email} userImage={session.user?.image} />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Sidebar />
+      <main className="ml-64 pt-24 px-4 sm:px-6 lg:px-8 pb-8">
         <div className="mb-6">
           <Link
             href="/domains"
