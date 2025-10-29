@@ -60,6 +60,17 @@ export default function TargetList({ targets }: TargetListProps) {
     }
   };
 
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'init':
+        return 'bg-gray-100 text-gray-800';
+      case 'fetched':
+        return 'bg-green-100 text-green-800';
+      default:
+        return 'bg-blue-100 text-blue-800';
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden">
       <table className="min-w-full divide-y divide-gray-200">
@@ -108,7 +119,7 @@ export default function TargetList({ targets }: TargetListProps) {
                   {target.ip}
                 </td>
                 <td className="px-4 py-2 whitespace-nowrap">
-                  <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(target.status)}`}>
                     {target.status}
                   </span>
                 </td>
