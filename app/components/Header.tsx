@@ -23,7 +23,7 @@ export default function Header({ userEmail, userImage }: HeaderProps) {
             />
             <div className="flex flex-col">
               <span className="text-gray-900 font-bold text-lg tracking-tight">Sales Orchestrio</span>
-              <span className="text-gray-500 text-xs">Business Automation Platform</span>
+              <span className="text-gray-500 text-xs">業務自動化プラットフォーム</span>
             </div>
           </Link>
           <div className="flex items-center gap-4">

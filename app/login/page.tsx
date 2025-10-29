@@ -26,11 +26,11 @@ export default function LoginPage() {
             <div className="inline-flex items-center justify-center mb-4">
               <img src="/sd.png" alt="Logo" className="w-20 h-20 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
               Sales Orchestrio
             </h1>
             <p className="text-gray-600 text-sm">
-              Business Automation Platform
+              業務自動化プラットフォーム
             </p>
           </div>
 
