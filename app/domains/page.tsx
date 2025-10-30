@@ -15,9 +15,9 @@ export default async function DomainsPage() {
     redirect('/login');
   }
 
-  const initialDomains = await getDomains({ limit: ITEMS_PER_PAGE, offset: 0 });
-  const allDomains = await getDomains();
-  const totalCount = allDomains.length;
+  const response = await getDomains({ limit: ITEMS_PER_PAGE, offset: 0 });
+  const initialDomains = response.domains;
+  const totalCount = response.total;
 
   return (
     <div className="min-h-screen bg-gray-50">

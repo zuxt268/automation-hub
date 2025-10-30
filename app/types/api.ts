@@ -43,6 +43,12 @@ export interface Domain {
   updated_at: string;
 }
 
+export interface DomainsResponse {
+  domains: Domain[];
+  total: number;
+  count: number;
+}
+
 export interface FetchDomainsRequest {
   target: string;
 }

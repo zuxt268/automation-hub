@@ -16,16 +16,12 @@ export async function GET(request: NextRequest) {
     const offset = searchParams.get('offset') ? Number(searchParams.get('offset')) : undefined;
     const status = searchParams.get('status') || undefined;
     const isJapan = searchParams.get('is_japan') ? searchParams.get('is_japan') === 'true' : undefined;
+    const target = searchParams.get('target') || undefined;
+    const name = searchParams.get('name') || undefined;
 
-    const domains = await getDomains({ limit, offset, status, is_japan: isJapan });
+    const response = await getDomains({ limit, offset, status, is_japan: isJapan, target, name });
 
-    // 総数を取得（フィルター適用済み）
-    const allDomains = await getDomains({ status, is_japan: isJapan });
-
-    return NextResponse.json({
-      domains,
-      total: allDomains.length,
-    });
+    return NextResponse.json(response);
   } catch (error) {
     console.error('Failed to fetch domains:', error);
     return NextResponse.json(

@@ -1,4 +1,4 @@
-import {HealthCheckResponse, Target, CreateTargetRequest, Domain, FetchDomainsRequest, Log, Task, CreateTaskRequest, UpdateTaskRequest} from "@/app/types/api";
+import {HealthCheckResponse, Target, CreateTargetRequest, Domain, DomainsResponse, FetchDomainsRequest, Log, Task, CreateTaskRequest, UpdateTaskRequest} from "@/app/types/api";
 import {cookies} from 'next/headers';
 
 const API_BASE_URL = process.env.API_BASE_URL;
@@ -80,7 +80,7 @@ export async function getDomains(params?: {
     industry?: string;
     is_ssl?: boolean;
     target?: string;
-}): Promise<Domain[]> {
+}): Promise<DomainsResponse> {
     const queryParams = new URLSearchParams();
     if (params?.limit) queryParams.append('limit', params.limit.toString());
     if (params?.offset) queryParams.append('offset', params.offset.toString());
@@ -95,7 +95,7 @@ export async function getDomains(params?: {
     if (params?.target) queryParams.append('target', params.target);
 
     const query = queryParams.toString();
-    return apiFetch<Domain[]>(`/domains${query ? `?${query}` : ''}`);
+    return apiFetch<DomainsResponse>(`/domains${query ? `?${query}` : ''}`);
 }
 
 export async function getDomainById(id: number): Promise<Domain> {
