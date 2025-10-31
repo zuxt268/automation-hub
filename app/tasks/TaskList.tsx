@@ -162,76 +162,6 @@ export default function TaskList({ tasks }: TaskListProps) {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
-        <button
-          onClick={() => setIsCreating(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-        >
-          + 新規作成
-        </button>
-      </div>
-
-      {isCreating && (
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold mb-4">新規タスク作成</h3>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                タスク名
-              </label>
-              <input
-                type="text"
-                value={createForm.name}
-                onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                説明
-              </label>
-              <textarea
-                value={createForm.description}
-                onChange={(e) => setCreateForm({ ...createForm, description: e.target.value })}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                ステータス
-              </label>
-              <select
-                value={createForm.status}
-                onChange={(e) => setCreateForm({ ...createForm, status: parseInt(e.target.value) })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-              >
-                <option value={0}>無効</option>
-                <option value={1}>待機</option>
-                <option value={2}>実行中</option>
-              </select>
-            </div>
-            <div className="flex gap-2">
-              <button
-                onClick={handleCreate}
-                className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700"
-              >
-                作成
-              </button>
-              <button
-                onClick={() => {
-                  setIsCreating(false);
-                  setCreateForm({ name: '', description: '', status: 0 });
-                }}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400"
-              >
-                キャンセル
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -307,30 +237,15 @@ export default function TaskList({ tasks }: TaskListProps) {
                     {mounted ? formatDate(task.updated_at) : ''}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <div className="flex gap-2">
-                      {task.status === 1 && (
-                        <button
-                          onClick={() => handleExecute(task.id)}
-                          disabled={executingId === task.id}
-                          className="text-green-600 hover:text-green-900 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {executingId === task.id ? '実行中...' : '実行'}
-                        </button>
-                      )}
-                      <button
-                        onClick={() => handleEdit(task)}
-                        className="text-blue-600 hover:text-blue-900"
-                      >
-                        編集
-                      </button>
-                      <button
-                        onClick={() => handleDelete(task.id)}
-                        disabled={deletingId === task.id}
-                        className="text-red-600 hover:text-red-900 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {deletingId === task.id ? '削除中...' : '削除'}
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => handleExecute(task.id)}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-semibold rounded-lg hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      <span>ジョブ投入</span>
+                    </button>
                   </td>
                 </tr>
               ))
