@@ -14,16 +14,12 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit') ? Number(searchParams.get('limit')) : undefined;
     const offset = searchParams.get('offset') ? Number(searchParams.get('offset')) : undefined;
+    const name = searchParams.get('name') || undefined;
+    const category = searchParams.get('category') || undefined;
 
-    const logs = await getLogs({ limit, offset });
+    const logsResponse = await getLogs({ limit, offset, name, category });
 
-    // 総数を取得
-    const allLogs = await getLogs({});
-
-    return NextResponse.json({
-      logs,
-      total: allLogs.length,
-    });
+    return NextResponse.json(logsResponse);
   } catch (error) {
     console.error('Failed to fetch logs:', error);
     return NextResponse.json(

@@ -87,8 +87,8 @@ export default function LogList({ initialLogs, totalCount }: LogListProps) {
                   </td>
                 </tr>
               ) : (
-                logs.map((log) => (
-                  <tr key={log.id} className="hover:bg-gray-50">
+                logs.map((log, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
                     <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
                       {formatDate(log.created_at)}
                     </td>

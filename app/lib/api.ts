@@ -1,4 +1,4 @@
-import {HealthCheckResponse, Target, CreateTargetRequest, Domain, DomainsResponse, FetchDomainsRequest, Log, Task, CreateTaskRequest, UpdateTaskRequest} from "@/app/types/api";
+import {HealthCheckResponse, Target, CreateTargetRequest, Domain, DomainsResponse, FetchDomainsRequest, LogsResponse, Task, CreateTaskRequest, UpdateTaskRequest} from "@/app/types/api";
 import {cookies} from 'next/headers';
 
 const API_BASE_URL = process.env.API_BASE_URL;
@@ -112,13 +112,17 @@ export async function fetchDomains(data: FetchDomainsRequest): Promise<void> {
 export async function getLogs(params?: {
     limit?: number;
     offset?: number;
-}): Promise<Log[]> {
+    name?: string;
+    category?: string;
+}): Promise<LogsResponse> {
     const queryParams = new URLSearchParams();
     if (params?.limit) queryParams.append('limit', params.limit.toString());
     if (params?.offset) queryParams.append('offset', params.offset.toString());
+    if (params?.name) queryParams.append('name', params.name);
+    if (params?.category) queryParams.append('category', params.category);
 
     const query = queryParams.toString();
-    return apiFetch<Log[]>(`/logs${query ? `?${query}` : ''}`);
+    return apiFetch<LogsResponse>(`/logs${query ? `?${query}` : ''}`);
 }
 
 export async function getTasks(): Promise<Task[]> {

@@ -21,11 +21,8 @@ export default async function LogsPage({
   const itemsPerPage = 20;
   const offset = (currentPage - 1) * itemsPerPage;
 
-  const logs = await getLogs({ limit: itemsPerPage, offset });
-
-  // 総数を取得
-  const allLogs = await getLogs({});
-  const totalCount = allLogs.length;
+  const logsResponse = await getLogs({ limit: itemsPerPage, offset });
+  const { logs, total: totalCount } = logsResponse;
 
   return (
     <div className="min-h-screen bg-gray-50">

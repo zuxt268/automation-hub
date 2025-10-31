@@ -54,11 +54,16 @@ export interface FetchDomainsRequest {
 }
 
 export interface Log {
-  id: number;
   name: string;
   category: string;
   message: string;
   created_at: string;
+}
+
+export interface LogsResponse {
+  logs: Log[];
+  total: number;
+  count: number;
 }
 
 export interface Task {
