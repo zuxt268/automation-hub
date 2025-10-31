@@ -272,8 +272,19 @@ export default function TaskList({ tasks }: TaskListProps) {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {task.id}
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    {task.name}
+                  <td className="px-6 py-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-slate-600 to-slate-700 rounded-lg flex items-center justify-center shadow-sm">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-gray-800 hover:text-slate-600 transition-colors duration-200">
+                          {task.name}
+                        </p>
+                      </div>
+                    </div>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">
                     {task.description}

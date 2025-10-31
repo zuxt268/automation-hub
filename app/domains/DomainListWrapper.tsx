@@ -21,6 +21,7 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
   const [isJapanFilter, setIsJapanFilter] = useState<string>('');
   const [targetFilter, setTargetFilter] = useState<string>('');
   const [nameFilter, setNameFilter] = useState<string>('');
+  const [filteredTotal, setFilteredTotal] = useState(totalCount);
 
   useEffect(() => {
     const fetchDomains = async () => {
@@ -40,6 +41,7 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
         }
         const data = await response.json();
         setDomains(data.domains || []);
+        setFilteredTotal(data.total || 0);
         setTotalPages(Math.ceil((data.total || 0) / ITEMS_PER_PAGE));
       } catch (error) {
         console.error('Error fetching domains:', error);
@@ -159,6 +161,22 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
           >
             クリア
           </button>
+        </div>
+      </div>
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg shadow-sm p-4 mb-4 border border-blue-100">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            <span className="text-sm font-semibold text-gray-700">検索結果</span>
+          </div>
+          <div className="text-right">
+            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              {filteredTotal.toLocaleString()}
+            </span>
+            <span className="text-sm text-gray-600 ml-1">件</span>
+          </div>
         </div>
       </div>
       <DomainList domains={domains} />
