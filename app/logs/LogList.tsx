@@ -42,6 +42,9 @@ export default function LogList({ initialLogs, totalCount }: LogListProps) {
   };
 
   const formatDate = (dateString: string) => {
+    if (typeof window === 'undefined') {
+      return dateString;
+    }
     const date = new Date(dateString);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
