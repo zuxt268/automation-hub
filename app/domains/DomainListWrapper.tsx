@@ -22,6 +22,8 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
   const [targetFilter, setTargetFilter] = useState<string>('');
   const [nameFilter, setNameFilter] = useState<string>('');
   const [filteredTotal, setFilteredTotal] = useState(totalCount);
+  const [targetInput, setTargetInput] = useState<string>('');
+  const [nameInput, setNameInput] = useState<string>('');
 
   useEffect(() => {
     const fetchDomains = async () => {
@@ -63,6 +65,12 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
     setCurrentPage(1);
   };
 
+  const handleSearch = () => {
+    setNameFilter(nameInput);
+    setTargetFilter(targetInput);
+    setCurrentPage(1);
+  };
+
   if (isLoading) {
     return (
       <div className="bg-white rounded-lg shadow p-8 text-center">
@@ -82,10 +90,12 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
             <input
               id="name"
               type="text"
-              value={nameFilter}
-              onChange={(e) => {
-                setNameFilter(e.target.value);
-                handleFilterChange();
+              value={nameInput}
+              onChange={(e) => setNameInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch();
+                }
               }}
               placeholder="ドメイン名で検索"
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -98,10 +108,12 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
             <input
               id="target"
               type="text"
-              value={targetFilter}
-              onChange={(e) => {
-                setTargetFilter(e.target.value);
-                handleFilterChange();
+              value={targetInput}
+              onChange={(e) => setTargetInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch();
+                }
               }}
               placeholder="ターゲット名"
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -148,9 +160,17 @@ export default function DomainListWrapper({ initialDomains, totalCount }: Domain
             </select>
           </div>
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-2">
+          <button
+            onClick={handleSearch}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+          >
+            検索
+          </button>
           <button
             onClick={() => {
+              setNameInput('');
+              setTargetInput('');
               setNameFilter('');
               setTargetFilter('');
               setStatusFilter('');

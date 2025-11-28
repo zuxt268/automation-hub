@@ -51,7 +51,7 @@ export default async function Dashboard() {
             <p className="text-gray-600">ドメインの一覧、企業情報を確認します</p>
           </Link>
           <a
-            href="https://docs.google.com/spreadsheets/d/1raFhmdhZi6PIU3QzRRTwi57d-IUSMx4X5qIFa7Ii6MA/edit?gid=0#gid=0"
+            href="https://drive.google.com/drive/folders/0APPozBsJIEMtUk9PVA"
             target="_blank"
             rel="noopener noreferrer"
             className="group block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-yellow-300 transition-all"
@@ -62,7 +62,7 @@ export default async function Dashboard() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <h2 className="text-xl font-bold text-gray-900">スプレッドシート</h2>
+              <h2 className="text-xl font-bold text-gray-900">Googleドライブ</h2>
             </div>
             <p className="text-gray-600">競合他社サイトの管理シートを開きます</p>
           </a>
